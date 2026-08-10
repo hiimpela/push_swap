@@ -1,12 +1,13 @@
 NAME		= push_swap
 CC			= cc
-CFLAGS		= -Wall -Wextra -Werror
+# CFLAGS		= -Wall -Wextra -Werror
 RM			= rm -f
 
 LIBFT_DIR 	= libft
 LIBFT		= $(LIBFT_DIR)/libft.a
 
-SRCS		= push_swap.c compression.c 
+SRCS		= main.c compression.c complex.c disorder.c lis.c input.c medium_sort.c \
+push_buckets.c push_buckets_util.c push.c rotate.c simple_sort.c swap.c stack.c
 OBJS		= $(SRCS:.c=.o)
 HEADER		= push_swap.h
 

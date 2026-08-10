@@ -6,7 +6,7 @@
 /*   By: mwisniew <mwisniew@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/29 17:57:25 by mwisniew          #+#    #+#             */
-/*   Updated: 2026/06/29 17:57:26 by mwisniew         ###   ########.fr       */
+/*   Updated: 2026/08/06 17:17:49 by nfil             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <stddef.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include "ft_printf/ft_printf.h"
 
 typedef struct s_list
 {
