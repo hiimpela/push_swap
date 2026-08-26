@@ -6,104 +6,99 @@
 /*   By: mwisniew <mwisniew@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/04 19:48:27 by mwisniew          #+#    #+#             */
-/*   Updated: 2026/08/10 02:15:57 by mwisniew         ###   ########.fr       */
+/*   Updated: 2026/08/14 12:12:40 by mwisniew         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "push_swap.h"
-#include <stdio.h>
 
-int DEBUG_get_value_at_idx(t_stack *a, int i)
+static void	execute_rotations(t_context *context, t_moves best_move)
 {
-	t_element *cur = a->head;
-	int	idx = 0;
-	while (idx < i)
+	while (best_move.a_rot < 0)
 	{
-		cur = cur->next;
-		idx++;
+		rra(context);
+		best_move.a_rot++;
 	}
-	return cur->val;
+	while (best_move.a_rot > 0)
+	{
+		ra(context);
+		best_move.a_rot--;
+	}
+	while (best_move.b_rot < 0)
+	{
+		rrb(context);
+		best_move.b_rot++;
+	}
+	while (best_move.b_rot > 0)
+	{
+		rb(context);
+		best_move.b_rot--;
+	}
 }
 
-static void	execute_best_move(t_stack *a, t_stack *b, t_moves *moves)
+static void	execute_best_move(t_context *context, t_moves *moves)
 {
 	t_moves		best_move;
 	t_element	*cur;
 
 	best_move.total = (int) 1e9;
-	cur = b->head;
+	cur = context->b->head;
 	while (cur)
 	{
-		if (moves[cur->val].total < best_move.total)
+		if (moves[cur->val].total <= best_move.total)
 			best_move = moves[cur->val];
 		cur = cur->next;
 	}
-	//printf("[%d, %d, %d, %d]\n", best_move.a_rot, best_move.b_rot, best_move.rr, best_move.rrr);
 	while (best_move.rr--)
-	{
-		write(1, "rr\n", 3);
-		rotate_stacks(a, b);
-	}
+		rr(context);
 	while (best_move.rrr--)
-	{
-		write(1, "rrr\n", 4);
-		rev_rotate_stacks(a, b);
-	}
-	while (best_move.a_rot < 0)
-	{
-		write(1, "rra\n", 4);
-		rev_rotate_stack(a);
-		best_move.a_rot++;
-	}
-	while (best_move.a_rot > 0)
-	{
-		write(1, "ra\n", 3);
-		rotate_stack(a);
-		best_move.a_rot--;
-	}
-	while (best_move.b_rot < 0)
-	{
-		write(1, "rrb\n", 4);
-		rev_rotate_stack(b);
-		best_move.b_rot++;
-	}
-	while (best_move.b_rot > 0)
-	{
-		write(1, "rb\n", 3);
-		rotate_stack(b);
-		best_move.b_rot--;
-	}
-	write(1, "pa\n", 3);
-	push_stack_a(a, b);
+		rrr(context);
+	execute_rotations(context, best_move);
+	pa(context);
 }
 
-void	complex_sort(t_stack *a, t_stack *b, int *arr)
+static void	line_up(t_context *context)
 {
-	int		*in_lis;
-	int 	*target;
-	t_moves	*moves;
+	int			one_idx;
+	t_element	*cur;
+	t_stack		*a;
 
-	in_lis = fill_in_lis(arr, a->size);
-	push_to_b(a, b, in_lis, a->size);
-	free(in_lis);
-	while (b->size)
+	a = context->a;
+	one_idx = 0;
+	cur = a->tail;
+	while (cur)
 	{
-		target = find_target(a, b, a->size, b->size);
-		moves = generate_moves(a, b, target);
-		execute_best_move(a, b, moves);
-		free(target);
-		free(moves);
+		if (cur->val == 1)
+			break ;
+		cur = cur->prev;
+		one_idx++;
 	}
 	while (a->tail->val != 1)
 	{
-		write(1, "ra\n", 3);
-		rotate_stack(a);
+		if (one_idx > a->size / 2)
+		{
+			rra(context);
+			continue ;
+		}
+		ra(context);
 	}
-	/*
-	for (t_element *cur = b->tail; cur; cur = cur->prev)
+}
+
+void	complex_sort(t_context *context, int *arr)
+{
+	int		*in_lis;
+	int		*target;
+	t_moves	*moves;
+
+	in_lis = fill_in_lis(arr, context->a_size);
+	push_to_b(context, in_lis, context->a_size);
+	free(in_lis);
+	while (context->b_size)
 	{
-		t_moves m = moves[cur->val];
-		printf("b_val: %d - target: %d - rot_a: %d | rot_b: %d | rr: %d | rrr: %d\n", cur->val,
-				DEBUG_get_value_at_idx(a, target[cur->val]), m.a_rot, m.b_rot, m.rr, m.rrr);
+		target = find_target(context);
+		moves = generate_moves(context, target);
+		execute_best_move(context, moves);
+		free(target);
+		free(moves);
 	}
-	*/
+	line_up(context);
 }

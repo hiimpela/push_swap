@@ -6,7 +6,7 @@
 /*   By: mwisniew <mwisniew@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/05 11:18:04 by mwisniew          #+#    #+#             */
-/*   Updated: 2026/08/09 20:22:24 by mwisniew         ###   ########.fr       */
+/*   Updated: 2026/08/13 11:09:42 by mwisniew         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "push_swap.h"
@@ -36,60 +36,56 @@ static int	next_cheapest(t_stack *a, int *bucket, int left, int right)
 	return (-dist_from_bot);
 }
 
-static void	exec_moves(t_stack *a, int moves)
+static void	exec_moves(t_context *context, int moves)
 {
 	while (moves)
 	{
 		if (moves > 0)
 		{
-			rotate_stack(a);
-			write(1, "ra\n", 3);
+			ra(context);
 			moves--;
 		}
 		else
 		{
-			rev_rotate_stack(a);
-			write(1, "rra\n", 4);
+			rra(context);
 			moves++;
 		}
 	}
 }
 
-static void	push_and_rot(t_stack *a, t_stack *b, int *bucket, int left)
+static void	push_and_rot(t_context *context, int *bucket, int left)
 {
-	push_stack_b(a, b);
-	write(1, "pb\n", 3);
-	if (bucket[b->tail->val] == left)
+	pb(context);
+	if (bucket[context->b->tail->val] == left)
 	{
-		bucket[b->tail->val] = 0;
-		write(1, "rb\n", 3);
-		rotate_stack(b);
+		bucket[context->b->tail->val] = 0;
+		rb(context);
 	}
 	else
-		bucket[b->tail->val] = 0;
+		bucket[context->b->tail->val] = 0;
 }
 
-void	push_buckets_to_b(t_stack *a, t_stack *b, int *bucket, int n)
+void	push_buckets_to_b(t_context *context, int *bucket, int n)
 {
-	int	left_bucket;
-	int	right_bucket;
+	int	l_bucket;
+	int	r_bucket;
 	int	max_bucket;
 	int	moves;
 	int	nums_left;
 
 	max_bucket = get_max_bucket(bucket, n);
-	left_bucket = (max_bucket / 2) + max_bucket % 2;
-	right_bucket = (max_bucket / 2) + 1;
-	while (left_bucket > 0 && right_bucket <= max_bucket)
+	l_bucket = (max_bucket / 2) + max_bucket % 2;
+	r_bucket = (max_bucket / 2) + 1;
+	while (l_bucket > 0 && r_bucket <= max_bucket)
 	{
-		nums_left = to_find(bucket, left_bucket, right_bucket, n);
+		nums_left = to_find(bucket, l_bucket, r_bucket, n);
 		while (nums_left--)
 		{
-			moves = next_cheapest(a, bucket, left_bucket, right_bucket);
-			exec_moves(a, moves);
-			push_and_rot(a, b, bucket, left_bucket);
+			moves = next_cheapest(context->a, bucket, l_bucket, r_bucket);
+			exec_moves(context, moves);
+			push_and_rot(context, bucket, l_bucket);
 		}
-		left_bucket--;
-		right_bucket++;
+		l_bucket--;
+		r_bucket++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: mwisniew <mwisniew@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/31 11:40:22 by mwisniew          #+#    #+#             */
-/*   Updated: 2026/08/09 20:28:11 by mwisniew         ###   ########.fr       */
+/*   Updated: 2026/08/14 12:09:22 by mwisniew         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "push_swap.h"
@@ -46,26 +46,24 @@ static int	get_dist_to_target(t_stack *b, int target)
 	return (-dist_from_bot);
 }
 
-static void	exec_moves_b(t_stack *b, int moves)
+static void	exec_moves_b(t_context *context, int moves)
 {
 	while (moves)
 	{
 		if (moves > 0)
 		{
-			rotate_stack(b);
-			write(1, "rb\n", 3);
+			rb(context);
 			moves = moves - 1;
 		}
 		else
 		{
-			rev_rotate_stack(b);
-			write(1, "rrb\n", 4);
+			rrb(context);
 			moves = moves + 1;
 		}
 	}
 }
 
-static void	final_sweep(t_stack *a, t_stack *b, int n)
+static void	final_sweep(t_context *context, int n)
 {
 	int	target;
 	int	moves;
@@ -73,23 +71,23 @@ static void	final_sweep(t_stack *a, t_stack *b, int n)
 	target = n;
 	while (target)
 	{
-		moves = get_dist_to_target(b, target);
-		exec_moves_b(b, moves);
-		write(1, "pa\n", 3);
-		push_stack_a(a, b);
+		moves = get_dist_to_target(context->b, target);
+		exec_moves_b(context, moves);
+		pa(context);
 		target = target - 1;
 	}
 }
 
-void	medium_sort(t_stack *a, t_stack *b)
+void	medium_sort(t_context *context)
 {
 	int	bucket_size;
 	int	*bucket;
 	int	n;
 
-	n = a->size;
+	n = context->a_size;
 	bucket_size = sqrt_ceil(n) * 2;
 	bucket = fill_buckets(bucket_size, n);
-	push_buckets_to_b(a, b, bucket, n);
-	final_sweep(a, b, b->size);
+	push_buckets_to_b(context, bucket, n);
+	final_sweep(context, context->b_size);
+	free(bucket);
 }

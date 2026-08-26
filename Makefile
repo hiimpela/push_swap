@@ -1,14 +1,16 @@
 NAME		= push_swap
+LIBFT_DIR	= ./libft
+LIBFT		= $(LIBFT_DIR)/libft.a
 CC			= cc
-# CFLAGS		= -Wall -Wextra -Werror
+CFLAGS		= -Wall -Wextra -Werror
 RM			= rm -f
 
-LIBFT_DIR 	= libft
-LIBFT		= $(LIBFT_DIR)/libft.a
+SRCS =  complex_push_to_b.c    lis.c        push.c     rev_rotate.c   swap.c\
+basic_math.c     	   complex_targets.c       main.c         rotate.c\
+bench.c          	   compression.c           disorder.c     medium_buckets.c\
+simple_sort.c 		   complex.c        	   input.c        medium_buckets_utils.c\
+small_input.c 		   complex_costs.c  	   medium_sort.c  stack.c
 
-SRCS		= main.c compression.c complex.c disorder.c lis.c input.c medium_sort.c \
-push_buckets.c push_buckets_util.c push.c rotate.c simple_sort.c swap.c stack.c
-OBJS		= $(SRCS:.c=.o)
 HEADER		= push_swap.h
 
 all: $(NAME)
@@ -16,15 +18,11 @@ all: $(NAME)
 $(LIBFT):
 	$(MAKE) -C $(LIBFT_DIR)
 
-%.o: %.c $(HEADER)
-	$(CC) $(CFLAGS) -c $< -o $@
-
-$(NAME): $(LIBFT) $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
+$(NAME): $(LIBFT) $(SRCS)
+	$(CC) $(CFLAGS) $(SRCS) $(LIBFT) -o $(NAME)
 
 clean:
 	$(MAKE) clean -C $(LIBFT_DIR)
-	$(RM) $(OBJS)
 
 fclean: clean
 	$(MAKE) fclean -C $(LIBFT_DIR)

@@ -6,48 +6,68 @@
 /*   By: mwisniew <mwisniew@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/31 19:19:55 by mwisniew          #+#    #+#             */
-/*   Updated: 2026/08/04 23:52:36 by mwisniew         ###   ########.fr       */
+/*   Updated: 2026/08/14 03:12:15 by mwisniew         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "push_swap.h"
 
-#include <stdio.h>
-void	small_input(t_stack *a, t_stack *b)
+static void	sort_three(t_context *context)
+{
+	int		top;
+	int		mid;
+	int		bot;
+	t_stack	*a;
+
+	a = context->a;
+	top = a->tail->val;
+	mid = a->tail->prev->val;
+	bot = a->head->val;
+	if (top > mid && top > bot)
+		ra(context);
+	else if (mid > top && mid > bot)
+		rra(context);
+	if (a->tail->val > a->tail->prev->val)
+		sa(context);
+}
+
+static void	leave_three(t_context *context)
 {
 	int	n;
-	int	to_find;
 
+	n = context->a_size;
+	while (context->a_size > 3)
+	{
+		while (context->a->tail->val != 1
+			&& (context->a->tail->val != 2 || n != 5))
+			ra(context);
+		pb(context);
+	}
+}
+
+void	small_input(t_context *context)
+{
+	t_stack	*a;
+	int		n;
+
+	a = context->a;
 	n = a->size;
-	if (n == 1)
+	if (a->size <= 1)
 		return ;
-	if (n == 2)
+	if (a->size == 2)
 	{
 		if (a->tail->val > a->head->val)
-			write(1, "ra\n", 3);
+			ra(context);
 		return ;
 	}
-	while (a->tail->val != 1 &&  a->tail->val != 2)
+	if (a->size == 3)
 	{
-		write(1, "ra\n", 3);
-		rotate_stack(a);
+		sort_three(context);
+		return ;
 	}
-	if (a->tail->val == 1)
-		to_find = 2;
-	else
-		to_find = 1;
-	write(1, "pb\n", 3);
-	push_stack_b(a, b);
-	while (a->tail->val != to_find)
-	{
-		write(1, "ra\n", 3);
-		rotate_stack(a);
-	}
-	write(1, "pb\n", 3);
-	push_stack_b(a, b);
-	if (b->tail->val < b->head->val)
-	{
-		write(1, "rb\n", 3);
-		rotate_stack(b);
-	}
+	leave_three(context);
+	sort_three(context);
+	if (n == 5 && context->b->tail->val < context->b->head->val)
+		sb(context);
+	while (context->b_size > 0)
+		pa(context);
 }

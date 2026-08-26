@@ -6,7 +6,7 @@
 /*   By: mwisniew <mwisniew@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/22 17:25:20 by mwisniew          #+#    #+#             */
-/*   Updated: 2026/07/31 19:45:28 by mwisniew         ###   ########.fr       */
+/*   Updated: 2026/08/14 12:39:52 by mwisniew         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "push_swap.h"

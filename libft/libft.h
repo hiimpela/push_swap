@@ -6,7 +6,7 @@
 /*   By: mwisniew <mwisniew@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/29 17:57:25 by mwisniew          #+#    #+#             */
-/*   Updated: 2026/08/06 17:17:49 by nfil             ###   ########.fr       */
+/*   Updated: 2026/08/14 12:11:45 by nfil             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,19 @@
 
 # include <stddef.h>
 # include <stdlib.h>
+# include <stdarg.h>
 # include <unistd.h>
-# include "ft_printf/ft_printf.h"
 
 typedef struct s_list
 {
 	void			*content;
 	struct s_list	*next;
 }					t_list;
+
+int		ft_printf(const char *s, ...);
+int		ft_putchar(char c);
+int		ft_putnbr_dec(int n);
+int		ft_putfloat(double n);
 
 int		ft_atoi(const char *str);
 int		ft_isalpha(int c);

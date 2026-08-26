@@ -6,33 +6,26 @@
 /*   By: mwisniew <mwisniew@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/25 23:16:48 by mwisniew          #+#    #+#             */
-/*   Updated: 2026/08/06 20:40:12 by mwisniew         ###   ########.fr       */
+/*   Updated: 2026/08/13 10:32:43 by mwisniew         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "push_swap.h"
 
-void	simple_sort(t_stack *a, t_stack *b)
+void	simple_sort(t_context *context)
 {
 	int	n;
 	int	target;
 
-	n = a->size;
+	n = context->a_size;
 	target = 1;
 	while (target <= n)
 	{
-		while (a->tail->val != target)
-		{
-			write(1, "ra\n", 3);
-			rotate_stack(a);
-		}
-		write(1, "pb\n", 3);
-		push_stack_b(a, b);
+		while (context->a->tail->val != target)
+			ra(context);
+		pb(context);
 		target++;
 	}
 	while (n--)
-	{
-		write(1, "pa\n", 3);
-		push_stack_a(a, b);
-	}
+		pa(context);
 	return ;
 }

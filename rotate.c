@@ -6,22 +6,31 @@
 /*   By: mwisniew <mwisniew@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/28 00:12:00 by mwisniew          #+#    #+#             */
-/*   Updated: 2026/08/10 02:07:09 by mwisniew         ###   ########.fr       */
+/*   Updated: 2026/08/13 23:10:22 by mwisniew         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "push_swap.h"
 
-void	rev_rotate_stack(t_stack *st)
+void	ra(t_context *context)
 {
-	
-	t_element	*temp;
+	rotate_stack(context->a);
+	write(1, "ra\n", 3);
+	context->ops_count[RA]++;
+}
 
-	temp = malloc(sizeof(t_element));
-	if (!temp)
-		return ;
-	temp->val = st->head->val;
-	add_back(st, temp);
-	remove_front(st);
+void	rb(t_context *context)
+{
+	rotate_stack(context->b);
+	write(1, "rb\n", 3);
+	context->ops_count[RB]++;
+}
+
+void	rr(t_context *context)
+{
+	rotate_stack(context->a);
+	rotate_stack(context->b);
+	write(1, "rr\n", 3);
+	context->ops_count[RR]++;
 }
 
 void	rotate_stacks(t_stack *a, t_stack *b)
@@ -40,10 +49,4 @@ void	rotate_stack(t_stack *st)
 	temp->val = st->tail->val;
 	add_front(st, temp);
 	remove_back(st);
-}
-
-void	rev_rotate_stacks(t_stack *a, t_stack *b)
-{
-	rev_rotate_stack(a);
-	rev_rotate_stack(b);
 }

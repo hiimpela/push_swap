@@ -6,10 +6,28 @@
 /*   By: mwisniew <mwisniew@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/28 00:08:22 by mwisniew          #+#    #+#             */
-/*   Updated: 2026/07/28 00:08:41 by mwisniew         ###   ########.fr       */
+/*   Updated: 2026/08/13 09:56:51 by mwisniew         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "push_swap.h"
+
+void	pa(t_context *context)
+{
+	push_stack_a(context->a, context->b);
+	write(1, "pa\n", 3);
+	context->a_size++;
+	context->b_size--;
+	context->ops_count[PA]++;
+}
+
+void	pb(t_context *context)
+{
+	push_stack_b(context->a, context->b);
+	write(1, "pb\n", 3);
+	context->a_size--;
+	context->b_size++;
+	context->ops_count[PB]++;
+}
 
 void	push_stack_a(t_stack *a, t_stack *b)
 {

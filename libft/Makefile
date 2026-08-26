@@ -1,6 +1,4 @@
 NAME = libft.a
-PRINTF_DIR = ./ft_printf
-PRINTF = $(PRINTF_DIR)/libftprintf.a
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
@@ -11,8 +9,7 @@ ft_substr.c ft_strdup.c ft_memcmp.c ft_isascii.c ft_memmove.c ft_strlcpy.c ft_st
 ft_putnbr_fd.c ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c ft_striteri.c ft_strmapi.c \
 ft_lstdelone.c ft_lstadd_back.c ft_lstlast.c ft_lstsize.c ft_lstadd_front.c ft_itoa.c ft_lstnew.c \
 ft_lstiter.c ft_lstclear.c ft_lstmap.c \
-ft_printf/ft_printf.c ft_printf/ft_putchar.c ft_printf/ft_putstr.c ft_printf/ft_putprc.c ft_printf/ft_putnbr_dec.c \
-ft_printf/ft_putnbr_lowerhex.c ft_printf/ft_putnbr_upperhex.c ft_printf/ft_putnbr_undec.c ft_printf/ft_putptr.c
+ft_printf.c ft_putchar.c ft_putnbr_dec.c ft_putfloat.c
 
 all: $(NAME)
 
@@ -22,15 +19,12 @@ OBJS := $(SRCS:.c=.o)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME): $(OBJS)
-	@make -C $(PRINTF_DIR)
 	ar rcs $(NAME) $(OBJS)
 
 clean:
 	rm -f $(OBJS)
-	@make -C $(PRINTF_DIR) clean
 fclean: clean
 	rm -f $(NAME)
-	@make -C $(PRINTF_DIR) fclean
 re: fclean all
 
 .PHONY: clean all fclean re

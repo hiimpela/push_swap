@@ -6,7 +6,7 @@
 /*   By: nfil <nfil@student.42warsaw.pl>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/26 19:05:34 by nfil              #+#    #+#             */
-/*   Updated: 2026/07/28 22:55:39 by mwisniew         ###   ########.fr       */
+/*   Updated: 2026/08/11 06:35:27 by mwisniew         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "push_swap.h"
@@ -37,6 +37,7 @@ float	disorder_calc(int *a, int n)
 int	main()
 {
 	int	a[10] = {4, 60, 3, 87, 40};
-	printf("%f", disorder_calc(a, 5));
+//	printf("%f", disorder_calc(a, 5));
+	ft_printf("%f", disorder_calc(a, 5));
 }
 */

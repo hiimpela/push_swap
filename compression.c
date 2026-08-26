@@ -6,7 +6,7 @@
 /*   By: mwisniew <mwisniew@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/21 22:39:27 by mwisniew          #+#    #+#             */
-/*   Updated: 2026/08/08 01:19:29 by mwisniew         ###   ########.fr       */
+/*   Updated: 2026/08/14 02:18:00 by mwisniew         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "push_swap.h"
@@ -63,12 +63,11 @@ void	compress(int *arr, int n)
 		j = 0;
 		while (j < n)
 		{
-			if (sorted_arr[i] == arr[j])
-				arr[j] = cur;
+			if (arr[i] == sorted_arr[j])
+				cur = j + 1;
 			j++;
 		}
-		if (i != n - 1 && sorted_arr[i] != sorted_arr[i + 1])
-			cur++;
+		arr[i] = cur;
 		i++;
 	}
 	free(sorted_arr);

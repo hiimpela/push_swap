@@ -6,30 +6,20 @@
 /*   By: nfil <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/13 18:26:25 by nfil              #+#    #+#             */
-/*   Updated: 2026/07/14 12:30:01 by nfil             ###   ########.fr       */
+/*   Updated: 2026/08/13 22:07:18 by mwisniew         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
 static int	format_check(const char *s, int i, va_list args)
 {
 	if (s[i] == 'c')
 		return (ft_putchar(va_arg(args, int)));
-	else if (s[i] == 's')
-		return (ft_putstr(va_arg(args, char *)));
-	else if (s[i] == 'p')
-		return (ft_putptr(va_arg(args, void *)));
-	else if (s[i] == 'd' || s[i] == 'i')
+	else if (s[i] == 'd')
 		return (ft_putnbr_dec(va_arg(args, int)));
-	else if (s[i] == 'u')
-		return (ft_putnbr_undec(va_arg(args, unsigned int)));
-	else if (s[i] == 'x')
-		return (ft_putnbr_lowerhex(va_arg(args, unsigned int)));
-	else if (s[i] == 'X')
-		return (ft_putnbr_upperhex(va_arg(args, unsigned int)));
-	else if (s[i] == '%')
-		return (ft_putprc());
+	else if (s[i] == 'f')
+		return (ft_putfloat(va_arg(args, double)));
 	else
 		return (-1);
 }
@@ -82,8 +72,8 @@ int	ft_printf(const char *s, ...)
 #include <stdio.h>
 int main()
 {
-	printf("%d", printf("ajhflaejh"));
-	printf("\n");
-	ft_printf("%d", ft_printf("%s", "help"));
-	ft_printf("this will make me cry at some point");
+	float	a;
+	a = 0.62;
+	ft_printf("%f", a);
+//	printf("%.2f", a);
 }*/
